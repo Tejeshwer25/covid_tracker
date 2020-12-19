@@ -1,0 +1,35 @@
+body {
+    background-color: rgb(230, 227, 227);
+}
+
+.app__parts {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.app__cards {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+
+.app__header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: crimson;
+    color: wheat;
+}
+
+.header__dropdown {
+    width: 150px;
+    color: wheat;
+}
+
+.MuiSelect-outlined.MuiSelect-outlined {
+    color: wheat
+}
+
+.header__select {
+    border: 2px solid wheat;
+}
