@@ -1,0 +1,18 @@
+.table tr:nth-of-type(odd) {
+    background-color: rgb(221, 217, 217);
+}
+
+.table {
+    margin-top: 20px;
+    overflow: scroll;
+    height: 50vh;
+}
+
+.table__heading {
+    margin-bottom: 10px;
+    scroll-behavior: smooth;
+}
+
+td {
+    padding: 5px;
+}

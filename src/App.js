@@ -1,6 +1,7 @@
-import { FormControl, MenuItem, Select } from '@material-ui/core';
+import { Card, CardContent, FormControl, MenuItem, Select } from '@material-ui/core';
 import { useState, useEffect } from 'react';
 import './App.css';
+import Graph from './Graph';
 import Information from './Information';
 import Table from './Table';
 import {sort} from './utility.js';
@@ -10,6 +11,7 @@ function App() {
   var [selectedCountry, setSelectedCountry] = useState("worldwide");
   var [countryInformation, setCountryInformation] = useState({});
   var [tableData, setTableData] = useState([]);
+  var [caseType, setCaseType] = useState("cases");
 
   useEffect(() => {
     fetch("https://disease.sh/v3/covid-19/all")
@@ -75,6 +77,12 @@ function App() {
 
         <div className="app__right">
           <Table countries={tableData}/>
+          <h3>Worldwide new {caseType}</h3>
+          <Card>
+            <CardContent>
+              <Graph caseType={caseType}/>
+            </CardContent>
+          </Card>
         </div>
       </div>
       
