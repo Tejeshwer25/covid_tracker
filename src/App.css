@@ -7,6 +7,14 @@ body {
     justify-content: space-evenly;
 }
 
+.app__left {
+    width: 50%;
+}
+
+.app__right {
+    width: 25%;
+}
+
 .app__cards {
     display: flex;
     justify-content: space-evenly;

@@ -5,6 +5,8 @@ import Graph from './Graph';
 import Information from './Information';
 import Table from './Table';
 import {sort} from './utility.js';
+import Map from './Map';
+import "leaflet/dist/leaflet.css";
 
 function App() {
   var [countries, setCountries] = useState([]);
@@ -12,6 +14,9 @@ function App() {
   var [countryInformation, setCountryInformation] = useState({});
   var [tableData, setTableData] = useState([]);
   var [caseType, setCaseType] = useState("cases");
+  var [mapCenter, setMapCenter] = useState({lat:34.80746, lng:-40.4796});
+  var [mapZoom, setMapZoom] = useState(3);
+  var [mapCountries, setMapCountries] = useState([]);
 
   useEffect(() => {
     fetch("https://disease.sh/v3/covid-19/all")
@@ -35,6 +40,7 @@ function App() {
                 const sortedData = sort(data);
 
                 setTableData(sortedData);
+                setMapCountries(data);
                 setCountries(countries);
             })
         };
@@ -49,6 +55,9 @@ function App() {
       .then(data => {
         setSelectedCountry(e.target.value);
         setCountryInformation(data);
+
+        setMapCenter({lat:data.countryInfo.lat, lng:data.countryInfo.lng});
+        setMapZoom(4);
       })
     }
 
@@ -73,6 +82,9 @@ function App() {
             <Information type="Deaths" current={countryInformation.todayDeaths} total={countryInformation.deaths}/>
             <Information type="Recovered" current={countryInformation.todayRecovered} total={countryInformation.recovered}/>
           </div>
+
+          <Map countries={mapCountries} center={mapCenter} zoom={mapZoom} />
+          
         </div>
 
         <div className="app__right">
