@@ -2,22 +2,27 @@ body {
     background-color: rgb(230, 227, 227);
 }
 
+h3 {
+    text-align: center;
+}
+
 .app__parts {
     display: flex;
     justify-content: space-evenly;
 }
 
 .app__left {
-    width: 50%;
+    width: 60%;
 }
 
 .app__right {
-    width: 25%;
+    margin-top: 20px;
+    width: 30%;
 }
 
 .app__cards {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     margin-top: 20px;
 }
 
@@ -48,14 +53,17 @@ body {
     }
 
     .app__left {
-        width: 100%;
+        width: 90%;
+        margin: auto;
     }
 
     .app__right {
-        width: 100%;
+        width: 90%;
+        margin: auto;
+        margin-top: 20px;
     }
-}
 
-.table__heading {
-    margin-top: 20px;
+    h3 {
+        text-align: center;
+    }
 }

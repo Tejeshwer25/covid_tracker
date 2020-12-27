@@ -1,5 +1,5 @@
 import { Card, CardContent, FormControl, MenuItem, Select } from '@material-ui/core';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Graph from './Graph';
 import Information from './Information';
@@ -9,14 +9,19 @@ import Map from './Map';
 import "leaflet/dist/leaflet.css";
 
 function App() {
-  var [countries, setCountries] = useState([]);
-  var [selectedCountry, setSelectedCountry] = useState("worldwide");
-  var [countryInformation, setCountryInformation] = useState({});
-  var [tableData, setTableData] = useState([]);
-  var [caseType, setCaseType] = useState("cases");
   var [mapCenter, setMapCenter] = useState({lat:34.80746, lng:-40.4796});
   var [mapZoom, setMapZoom] = useState(3);
   var [mapCountries, setMapCountries] = useState([]);
+  var [tableData, setTableData] = useState([]);
+  var [countries, setCountries] = useState([]);
+
+  // country , setInputCountry
+  var [selectedCountry, setSelectedCountry] = useState("worldwide");
+  // countryInfo, setCountryInfo
+  var [countryInformation, setCountryInformation] = useState({});
+  // casesType, setCasesType
+  var [caseType, setCaseType] = useState("cases");
+
 
   useEffect(() => {
     fetch("https://disease.sh/v3/covid-19/all")
@@ -37,7 +42,7 @@ function App() {
                     value: country.countryInfo.iso2
                 }));
 
-                const sortedData = sort(data);
+                let sortedData = sort(data);
 
                 setTableData(sortedData);
                 setMapCountries(data);
@@ -47,16 +52,15 @@ function App() {
         getCountries();
     }, []);
 
-    var changeCountry = async (e) => {
+    const changeCountry = async (e) => {
       const url = e.target.value === "worldwide" ? 'https://disease.sh/v3/covid-19/all' : `https://disease.sh/v3/covid-19/countries/${e.target.value}`;
 
       await fetch(url)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         setSelectedCountry(e.target.value);
         setCountryInformation(data);
-
-        setMapCenter({lat:data.countryInfo.lat, lng:data.countryInfo.lng});
+        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
         setMapZoom(4);
       })
     }
@@ -97,20 +101,24 @@ function App() {
             current={prettyPrintStat(countryInformation.todayRecovered)} total={prettyPrintStat(countryInformation.recovered)}/>
           </div>
 
-          <Map countries={mapCountries} caseType={caseType} center={mapCenter} zoom={mapZoom} />
+          <Map countries={mapCountries} 
+            casesType={caseType} 
+            center={mapCenter} 
+            zoom={mapZoom} 
+          />
           
         </div>
 
         <Card className="app__right">
-          <h3 className="table__heading">List of countries by cases:- </h3>
-          <Table countries={tableData}/>
+          <CardContent className="app__table">
+            <h3 className="table__heading">List of countries by cases:- </h3>
+            <Table countries={tableData}/>
+          </CardContent>
 
-          <h3>Worldwide new {caseType}</h3>
-          <Card>
-            <CardContent>
+            <CardContent className="app__chart">
+              <h3>Worldwide new {caseType}</h3>
               <Graph caseType={caseType}/>
             </CardContent>
-          </Card>
         </Card>
       </div>
       
