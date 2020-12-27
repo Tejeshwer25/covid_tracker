@@ -4,7 +4,7 @@ import './App.css';
 import Graph from './Graph';
 import Information from './Information';
 import Table from './Table';
-import {sort} from './utility.js';
+import {sort, prettyPrintStat} from './utility.js';
 import Map from './Map';
 import "leaflet/dist/leaflet.css";
 
@@ -78,24 +78,40 @@ function App() {
       <div className="app__parts">
         <div className="app__left">
           <div className="app__cards">
-            <Information type="Cases" current={countryInformation.todayCases} total={countryInformation.cases}/>
-            <Information type="Deaths" current={countryInformation.todayDeaths} total={countryInformation.deaths}/>
-            <Information type="Recovered" current={countryInformation.todayRecovered} total={countryInformation.recovered}/>
+            <Information type="Cases" 
+            isRed
+            active= {caseType === "cases"}
+            onClick = {e => setCaseType('cases')}
+            current={prettyPrintStat(countryInformation.todayCases)} 
+            total={prettyPrintStat(countryInformation.cases)}/>
+
+            <Information type="Deaths" 
+            isRed
+            active= {caseType === "deaths"}
+            onClick = {e => setCaseType("deaths")}
+            current={prettyPrintStat(countryInformation.todayDeaths)} total={prettyPrintStat(countryInformation.deaths)}/>
+            
+            <Information type="Recovered" 
+            active = {caseType === "recovered"}
+            onClick = {e => setCaseType('recovered')}
+            current={prettyPrintStat(countryInformation.todayRecovered)} total={prettyPrintStat(countryInformation.recovered)}/>
           </div>
 
-          <Map countries={mapCountries} center={mapCenter} zoom={mapZoom} />
+          <Map countries={mapCountries} caseType={caseType} center={mapCenter} zoom={mapZoom} />
           
         </div>
 
-        <div className="app__right">
+        <Card className="app__right">
+          <h3 className="table__heading">List of countries by cases:- </h3>
           <Table countries={tableData}/>
+
           <h3>Worldwide new {caseType}</h3>
           <Card>
             <CardContent>
               <Graph caseType={caseType}/>
             </CardContent>
           </Card>
-        </div>
+        </Card>
       </div>
       
     </div>

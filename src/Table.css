@@ -8,11 +8,6 @@
     height: 50vh;
 }
 
-.table__heading {
-    margin-bottom: 10px;
-    scroll-behavior: smooth;
-}
-
 td {
     padding: 5px;
 }

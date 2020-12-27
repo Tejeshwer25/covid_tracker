@@ -41,3 +41,21 @@ body {
 .header__select {
     border: 2px solid wheat;
 }
+
+@media (max-width: 900px) {
+    .app__parts {
+        flex-direction: column;
+    }
+
+    .app__left {
+        width: 100%;
+    }
+
+    .app__right {
+        width: 100%;
+    }
+}
+
+.table__heading {
+    margin-top: 20px;
+}
