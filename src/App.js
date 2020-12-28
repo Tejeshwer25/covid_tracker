@@ -7,6 +7,7 @@ import Table from './Table';
 import {sort, prettyPrintStat} from './utility.js';
 import Map from './Map';
 import "leaflet/dist/leaflet.css";
+import { useSpring , animated } from 'react-spring';
 
 function App() {
   var [mapCenter, setMapCenter] = useState({lat:34.80746, lng:-40.4796});
@@ -14,12 +15,8 @@ function App() {
   var [mapCountries, setMapCountries] = useState([]);
   var [tableData, setTableData] = useState([]);
   var [countries, setCountries] = useState([]);
-
-  // country , setInputCountry
   var [selectedCountry, setSelectedCountry] = useState("worldwide");
-  // countryInfo, setCountryInfo
   var [countryInformation, setCountryInformation] = useState({});
-  // casesType, setCasesType
   var [caseType, setCaseType] = useState("cases");
 
 
@@ -65,6 +62,11 @@ function App() {
       })
     }
 
+    const props = useSpring({
+      from: { opacity: 0, marginTop:-500 },
+      to: {opacity:1, marginTop:0},
+    })
+
   return (
     <div className="app">
       <div className="app__header">
@@ -79,7 +81,7 @@ function App() {
          </FormControl>
       </div>
       
-      <div className="app__parts">
+      <animated.div className="app__parts" style={props}>
         <div className="app__left">
           <div className="app__cards">
             <Information type="Cases" 
@@ -120,8 +122,7 @@ function App() {
               <Graph caseType={caseType}/>
             </CardContent>
         </Card>
-      </div>
-      
+      </animated.div>
     </div>
   );
 }
