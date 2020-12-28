@@ -8,6 +8,9 @@ import {sort, prettyPrintStat} from './utility.js';
 import Map from './Map';
 import "leaflet/dist/leaflet.css";
 import { useSpring , animated } from 'react-spring';
+import {ThemeProvider} from 'styled-components'
+import {lightTheme, darkTheme} from './theme';
+import {GlobalStyles} from './global';
 
 function App() {
   var [mapCenter, setMapCenter] = useState({lat:34.80746, lng:-40.4796});
@@ -18,7 +21,15 @@ function App() {
   var [selectedCountry, setSelectedCountry] = useState("worldwide");
   var [countryInformation, setCountryInformation] = useState({});
   var [caseType, setCaseType] = useState("cases");
+  const [theme, setTheme] = useState('light');
 
+  const toggleTheme = () => {
+    if(theme === 'light') {
+      setTheme('dark');
+    } else {
+      setTheme('light');
+    }
+  }
 
   useEffect(() => {
     fetch("https://disease.sh/v3/covid-19/all")
@@ -63,13 +74,21 @@ function App() {
     }
 
     const props = useSpring({
-      from: { opacity: 0, marginTop:-500 },
+      from: { opacity: 0, marginTop:500 },
       to: {opacity:1, marginTop:0},
     })
 
+    const mapGraphStyle = useSpring({
+      from: {opacity: 0},
+      to: {opacity: 1},
+      config: {duration:5000, delay:5000}
+    })
+
   return (
-    <div className="app">
-      <div className="app__header">
+    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+      <div className="app">
+        <GlobalStyles />
+        <div className="app__header">
           <h1>Covid-19 Tracker</h1> 
           <FormControl className="header__dropdown">
            <Select className="header__select" variant="outlined" value={selectedCountry} onChange={changeCountry}>
@@ -79,9 +98,10 @@ function App() {
              ))}
            </Select>
          </FormControl>
-      </div>
+          <button onClick={toggleTheme}>Toggle theme</button>
+        </div>
       
-      <animated.div className="app__parts" style={props}>
+        <animated.div className="app__parts" style={props}>
         <div className="app__left">
           <div className="app__cards">
             <Information type="Cases" 
@@ -103,27 +123,31 @@ function App() {
             current={prettyPrintStat(countryInformation.todayRecovered)} total={prettyPrintStat(countryInformation.recovered)}/>
           </div>
 
-          <Map countries={mapCountries} 
-            casesType={caseType} 
-            center={mapCenter} 
-            zoom={mapZoom} 
-          />
-          
+          <div>
+            <Map countries={mapCountries} 
+              casesType={caseType} 
+              center={mapCenter} 
+              zoom={mapZoom} 
+            />      
+          </div>
         </div>
 
-        <Card className="app__right">
-          <CardContent className="app__table">
-            <h3 className="table__heading">List of countries by cases:- </h3>
-            <Table countries={tableData}/>
-          </CardContent>
-
-            <CardContent className="app__chart">
-              <h3>Worldwide new {caseType}</h3>
-              <Graph caseType={caseType}/>
+        <animated.div style={mapGraphStyle} className="app__right">
+          <Card>
+            <CardContent className="app__table">
+              <h3 className="table__heading">List of countries by cases:- </h3>
+              <Table countries={tableData}/>
             </CardContent>
-        </Card>
+
+              <CardContent className="app__chart">
+                <h3>Worldwide new {caseType}</h3>
+                <Graph caseType={caseType}/>
+              </CardContent>
+          </Card>
+        </animated.div>
       </animated.div>
-    </div>
+      </div>
+    </ThemeProvider>
   );
 }
 
