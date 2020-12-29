@@ -1,0 +1,8 @@
+.toggle {
+    background-color: crimson;
+    border: 2px solid wheat;
+    cursor: pointer;
+    color: wheat;
+    border-radius: 5px;
+    padding: 10px;
+}

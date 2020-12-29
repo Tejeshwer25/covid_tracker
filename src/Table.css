@@ -11,3 +11,8 @@
 td {
     padding: 5px;
 }
+
+tr {
+    display: flex;
+    justify-content: space-between;
+}

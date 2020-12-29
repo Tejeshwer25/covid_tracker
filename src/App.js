@@ -11,9 +11,10 @@ import { useSpring , animated } from 'react-spring';
 import {ThemeProvider} from 'styled-components'
 import {lightTheme, darkTheme} from './theme';
 import {GlobalStyles} from './global';
+import Toggle from './Toggle';
 
 function App() {
-  var [mapCenter, setMapCenter] = useState({lat:34.80746, lng:-40.4796});
+  var [mapCenter, setMapCenter] = useState({lat:33, lng:65});
   var [mapZoom, setMapZoom] = useState(3);
   var [mapCountries, setMapCountries] = useState([]);
   var [tableData, setTableData] = useState([]);
@@ -66,20 +67,22 @@ function App() {
       await fetch(url)
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         setSelectedCountry(e.target.value);
         setCountryInformation(data);
-        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
-        setMapZoom(4);
+        setMapCenter(e.target.value === "worldwide" ? {lat:33, lng:65} : [data.countryInfo.lat, data.countryInfo.long]);
+        setMapZoom(e.target.value === "worldwide" ? 3 : 4);
       })
     }
 
     const props = useSpring({
       from: { opacity: 0, marginTop:500 },
       to: {opacity:1, marginTop:0},
+      config: {duration:2000}
     })
 
     const mapGraphStyle = useSpring({
-      from: {opacity: 0},
+      from: {opacity: -1},
       to: {opacity: 1},
       config: {duration:5000, delay:5000}
     })
@@ -98,7 +101,7 @@ function App() {
              ))}
            </Select>
          </FormControl>
-          <button onClick={toggleTheme}>Toggle theme</button>
+         <Toggle theme={theme} toggleTheme={toggleTheme}/>
         </div>
       
         <animated.div className="app__parts" style={props}>
@@ -107,19 +110,19 @@ function App() {
             <Information type="Cases" 
             isRed
             active= {caseType === "cases"}
-            onClick = {e => setCaseType('cases')}
+            onClick = {(e) => setCaseType("cases")}
             current={prettyPrintStat(countryInformation.todayCases)} 
             total={prettyPrintStat(countryInformation.cases)}/>
 
             <Information type="Deaths" 
             isRed
             active= {caseType === "deaths"}
-            onClick = {e => setCaseType("deaths")}
+            onClick = {(e) => setCaseType("deaths")}
             current={prettyPrintStat(countryInformation.todayDeaths)} total={prettyPrintStat(countryInformation.deaths)}/>
             
             <Information type="Recovered" 
             active = {caseType === "recovered"}
-            onClick = {e => setCaseType('recovered')}
+            onClick = {(e) => setCaseType("recovered")}
             current={prettyPrintStat(countryInformation.todayRecovered)} total={prettyPrintStat(countryInformation.recovered)}/>
           </div>
 
@@ -133,10 +136,12 @@ function App() {
         </div>
 
         <animated.div style={mapGraphStyle} className="app__right">
-          <Card>
+          <Card className="app__right--card">
             <CardContent className="app__table">
+              <div className="app__information">
               <h3 className="table__heading">List of countries by cases:- </h3>
               <Table countries={tableData}/>
+              </div>
             </CardContent>
 
               <CardContent className="app__chart">

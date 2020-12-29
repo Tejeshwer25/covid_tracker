@@ -86,7 +86,7 @@ function Graph({caseType}) {
                     data={{
                         datasets: [
                             {
-                                backgroundColor: "rgba(204, 16, 52, 0.5",
+                                backgroundColor: "rgba(204, 16, 52, 0.5)",
                                 borderColor: "#CC1034",
                                 data: covidData,
                             },
