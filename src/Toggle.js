@@ -1,6 +1,5 @@
 import React from 'react';
 import {func, string} from 'prop-types';
-import styled from 'styled-components';
 import "./Toggle.css"
 
 function Toggle({theme, toggleTheme}) {
@@ -8,7 +7,7 @@ function Toggle({theme, toggleTheme}) {
 
     return (
         <button className="toggle" onClick={toggleTheme}>
-            {theme === 'light' ? 'Light' : 'Dark'} theme is active!
+            {isLight ? 'Light' : 'Dark'} theme is active!
         </button>
     );
 };
