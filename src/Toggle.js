@@ -1,14 +1,27 @@
 import React from 'react';
 import {func, string} from 'prop-types';
-import "./Toggle.css"
+import "./Toggle.css";
+import Switch from '@material-ui/core/Switch';
 
 function Toggle({theme, toggleTheme}) {
-    const isLight = theme === 'light';
+    // const isLight = theme === 'light';
+    const [state, setState] = React.useState({
+        checkedA: true,
+        checkedB: true,
+    });
+    const handleChange = (event) => {
+        setState({ ...state, [event.target.name]: event.target.checked });
+        toggleTheme();
+    };
 
     return (
-        <button className="toggle" onClick={toggleTheme}>
-            {isLight ? 'Light' : 'Dark'} theme is active!
-        </button>
+        <Switch
+            className="toggle"
+            checked={state.checkedA}
+            onChange={handleChange}
+            name="checkedA"
+            inputProps={{ 'aria-label': 'secondary checkbox' }}
+        />
     );
 };
 

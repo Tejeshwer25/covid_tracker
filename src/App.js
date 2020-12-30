@@ -8,10 +8,11 @@ import {sort, prettyPrintStat} from './utility.js';
 import Map from './Map';
 import "leaflet/dist/leaflet.css";
 import { useSpring , animated } from 'react-spring';
-import {ThemeProvider} from 'styled-components'
+import {ThemeProvider} from 'styled-components';
 import {lightTheme, darkTheme} from './theme';
 import {GlobalStyles} from './global';
 import Toggle from './Toggle';
+import Footer from './Footer';
 
 function App() {
   var [mapCenter, setMapCenter] = useState({lat:33, lng:65});
@@ -151,6 +152,7 @@ function App() {
           </Card>
         </animated.div>
       </animated.div>
+      <Footer />
       </div>
     </ThemeProvider>
   );

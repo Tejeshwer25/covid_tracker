@@ -1,0 +1,23 @@
+.footer {
+    background-color: crimson;
+    color: wheat;
+    margin-top: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    font-size: 1.3rem;
+}
+
+.footer__list {
+    display: flex;
+    list-style: none;
+    justify-content: space-evenly;
+    width: 50%;
+    margin: auto;
+}
+
+.MuiSvgIcon-root {
+    color: wheat;
+}

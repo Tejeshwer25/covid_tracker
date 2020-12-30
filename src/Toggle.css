@@ -1,8 +1,7 @@
-.toggle {
-    background-color: crimson;
-    border: 2px solid wheat;
-    cursor: pointer;
+.toggle > .MuiSwitch-colorSecondary.Mui-checked {
     color: wheat;
-    border-radius: 5px;
-    padding: 10px;
+}
+
+.toggle > .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track {
+    background-color: wheat;
 }
