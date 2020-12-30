@@ -9,8 +9,8 @@ function Footer() {
             Hey there, Tejeshwer here!!!<br/>
             Connect with me at: 
             <ul className="footer__list">
-                <li><a href="linkedin.com"><LinkedInIcon /></a></li>
-                <li><a href="www.github.com/Tejeshwer25"><GitHubIcon /></a></li>
+                <li><a href="https://www.linkedin.com/in/tejeshwer-singh-sachdeva-1961a9191/"><LinkedInIcon /></a></li>
+                <li><a href="https://www.github.com/Tejeshwer25"><GitHubIcon /></a></li>
             </ul>
         </div>
     );
